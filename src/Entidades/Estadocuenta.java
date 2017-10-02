@@ -7,11 +7,12 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Estadocuenta.findAll", query = "SELECT e FROM Estadocuenta e")
     , @NamedQuery(name = "Estadocuenta.findById", query = "SELECT e FROM Estadocuenta e WHERE e.id = :id")
-    , @NamedQuery(name = "Estadocuenta.findByCuentaalumnoIdcuentaalumnos", query = "SELECT e FROM Estadocuenta e WHERE e.cuentaalumnoIdcuentaalumnos = :cuentaalumnoIdcuentaalumnos")})
+    , @NamedQuery(name = "Estadocuenta.findByDetalle", query = "SELECT e FROM Estadocuenta e WHERE e.detalle = :detalle")})
 public class Estadocuenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,20 +37,17 @@ public class Estadocuenta implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private BigDecimal id;
-    @Basic(optional = false)
-    @Column(name = "CUENTAALUMNO_IDCUENTAALUMNOS")
-    private BigInteger cuentaalumnoIdcuentaalumnos;
+    @Column(name = "DETALLE")
+    private String detalle;
+    @JoinColumn(name = "CUENTAALUMNO", referencedColumnName = "IDCUENTAALUMNOS")
+    @ManyToOne(optional = false)
+    private Cuentaalumno cuentaalumno;
 
     public Estadocuenta() {
     }
 
     public Estadocuenta(BigDecimal id) {
         this.id = id;
-    }
-
-    public Estadocuenta(BigDecimal id, BigInteger cuentaalumnoIdcuentaalumnos) {
-        this.id = id;
-        this.cuentaalumnoIdcuentaalumnos = cuentaalumnoIdcuentaalumnos;
     }
 
     public BigDecimal getId() {
@@ -60,12 +58,20 @@ public class Estadocuenta implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getCuentaalumnoIdcuentaalumnos() {
-        return cuentaalumnoIdcuentaalumnos;
+    public String getDetalle() {
+        return detalle;
     }
 
-    public void setCuentaalumnoIdcuentaalumnos(BigInteger cuentaalumnoIdcuentaalumnos) {
-        this.cuentaalumnoIdcuentaalumnos = cuentaalumnoIdcuentaalumnos;
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+
+    public Cuentaalumno getCuentaalumno() {
+        return cuentaalumno;
+    }
+
+    public void setCuentaalumno(Cuentaalumno cuentaalumno) {
+        this.cuentaalumno = cuentaalumno;
     }
 
     @Override

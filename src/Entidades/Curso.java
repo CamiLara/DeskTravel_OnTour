@@ -6,18 +6,18 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Collection;
+import java.math.BigDecimal;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -31,44 +31,41 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c")
-    , @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.cursoPK.idcurso = :idcurso")
-    , @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre")
-    , @NamedQuery(name = "Curso.findByActividadIdactividad", query = "SELECT c FROM Curso c WHERE c.cursoPK.actividadIdactividad = :actividadIdactividad")})
+    , @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso")
+    , @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre")})
 public class Curso implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CursoPK cursoPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @Column(name = "IDCURSO")
+    private BigDecimal idcurso;
     @Column(name = "NOMBRE")
     private String nombre;
-    @ManyToMany(mappedBy = "cursoCollection")
-    private Collection<Alumno> alumnoCollection;
-    @JoinColumn(name = "ACTIVIDAD_IDACTIVIDAD", referencedColumnName = "IDACTIVIDAD", insertable = false, updatable = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    private List<Alumno> alumnoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cursoIdcurso")
+    private List<Actividad> actividadList;
+    @JoinColumn(name = "COLEGIO", referencedColumnName = "IDCOLEGIO")
     @ManyToOne(optional = false)
-    private Actividad actividad;
-    @JoinColumn(name = "CUENTACURSO_IDCUENTACURSO", referencedColumnName = "IDCUENTACURSO")
-    @OneToOne(optional = false)
-    private Cuentacurso cuentacursoIdcuentacurso;
-    @OneToMany(mappedBy = "curso")
-    private Collection<Colegio> colegioCollection;
+    private Colegio colegio;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    private List<Cuentacurso> cuentacursoList;
 
     public Curso() {
     }
 
-    public Curso(CursoPK cursoPK) {
-        this.cursoPK = cursoPK;
+    public Curso(BigDecimal idcurso) {
+        this.idcurso = idcurso;
     }
 
-    public Curso(BigInteger idcurso, BigInteger actividadIdactividad) {
-        this.cursoPK = new CursoPK(idcurso, actividadIdactividad);
+    public BigDecimal getIdcurso() {
+        return idcurso;
     }
 
-    public CursoPK getCursoPK() {
-        return cursoPK;
-    }
-
-    public void setCursoPK(CursoPK cursoPK) {
-        this.cursoPK = cursoPK;
+    public void setIdcurso(BigDecimal idcurso) {
+        this.idcurso = idcurso;
     }
 
     public String getNombre() {
@@ -80,43 +77,44 @@ public class Curso implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Alumno> getAlumnoCollection() {
-        return alumnoCollection;
+    public List<Alumno> getAlumnoList() {
+        return alumnoList;
     }
 
-    public void setAlumnoCollection(Collection<Alumno> alumnoCollection) {
-        this.alumnoCollection = alumnoCollection;
-    }
-
-    public Actividad getActividad() {
-        return actividad;
-    }
-
-    public void setActividad(Actividad actividad) {
-        this.actividad = actividad;
-    }
-
-    public Cuentacurso getCuentacursoIdcuentacurso() {
-        return cuentacursoIdcuentacurso;
-    }
-
-    public void setCuentacursoIdcuentacurso(Cuentacurso cuentacursoIdcuentacurso) {
-        this.cuentacursoIdcuentacurso = cuentacursoIdcuentacurso;
+    public void setAlumnoList(List<Alumno> alumnoList) {
+        this.alumnoList = alumnoList;
     }
 
     @XmlTransient
-    public Collection<Colegio> getColegioCollection() {
-        return colegioCollection;
+    public List<Actividad> getActividadList() {
+        return actividadList;
     }
 
-    public void setColegioCollection(Collection<Colegio> colegioCollection) {
-        this.colegioCollection = colegioCollection;
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
+    }
+
+    public Colegio getColegio() {
+        return colegio;
+    }
+
+    public void setColegio(Colegio colegio) {
+        this.colegio = colegio;
+    }
+
+    @XmlTransient
+    public List<Cuentacurso> getCuentacursoList() {
+        return cuentacursoList;
+    }
+
+    public void setCuentacursoList(List<Cuentacurso> cuentacursoList) {
+        this.cuentacursoList = cuentacursoList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cursoPK != null ? cursoPK.hashCode() : 0);
+        hash += (idcurso != null ? idcurso.hashCode() : 0);
         return hash;
     }
 
@@ -127,7 +125,7 @@ public class Curso implements Serializable {
             return false;
         }
         Curso other = (Curso) object;
-        if ((this.cursoPK == null && other.cursoPK != null) || (this.cursoPK != null && !this.cursoPK.equals(other.cursoPK))) {
+        if ((this.idcurso == null && other.idcurso != null) || (this.idcurso != null && !this.idcurso.equals(other.idcurso))) {
             return false;
         }
         return true;
@@ -135,7 +133,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Curso[ cursoPK=" + cursoPK + " ]";
+        return "Entidades.Curso[ idcurso=" + idcurso + " ]";
     }
     
 }

@@ -7,14 +7,18 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +44,10 @@ public class Perfil implements Serializable {
     private String descripción;
     @Column(name = "ESTADO")
     private String estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nombre")
+    private List<Cuenta> cuentaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfil")
+    private List<Permiso> permisoList;
 
     public Perfil() {
     }
@@ -70,6 +78,24 @@ public class Perfil implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    @XmlTransient
+    public List<Cuenta> getCuentaList() {
+        return cuentaList;
+    }
+
+    public void setCuentaList(List<Cuenta> cuentaList) {
+        this.cuentaList = cuentaList;
+    }
+
+    @XmlTransient
+    public List<Permiso> getPermisoList() {
+        return permisoList;
+    }
+
+    public void setPermisoList(List<Permiso> permisoList) {
+        this.permisoList = permisoList;
     }
 
     @Override

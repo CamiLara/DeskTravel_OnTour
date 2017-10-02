@@ -7,16 +7,18 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,9 +41,8 @@ public class Tipopago implements Serializable {
     private BigDecimal idtipopago;
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @JoinColumn(name = "PAGO_IDPAGO", referencedColumnName = "IDPAGO")
-    @OneToOne(optional = false)
-    private Pago pagoIdpago;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipopago")
+    private List<Pago> pagoList;
 
     public Tipopago() {
     }
@@ -66,12 +67,13 @@ public class Tipopago implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Pago getPagoIdpago() {
-        return pagoIdpago;
+    @XmlTransient
+    public List<Pago> getPagoList() {
+        return pagoList;
     }
 
-    public void setPagoIdpago(Pago pagoIdpago) {
-        this.pagoIdpago = pagoIdpago;
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
 
     @Override

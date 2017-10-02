@@ -7,7 +7,9 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,8 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,9 +40,11 @@ public class Origen implements Serializable {
     @Basic(optional = false)
     @Column(name = "IDORIGEN")
     private BigDecimal idorigen;
-    @JoinColumn(name = "PAIS_IDPAIS", referencedColumnName = "IDPAIS")
+    @JoinColumn(name = "PAIS", referencedColumnName = "IDPAIS")
     @ManyToOne(optional = false)
-    private Pais paisIdpais;
+    private Pais pais;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "origen1")
+    private List<Itinerario> itinerarioList;
 
     public Origen() {
     }
@@ -55,12 +61,21 @@ public class Origen implements Serializable {
         this.idorigen = idorigen;
     }
 
-    public Pais getPaisIdpais() {
-        return paisIdpais;
+    public Pais getPais() {
+        return pais;
     }
 
-    public void setPaisIdpais(Pais paisIdpais) {
-        this.paisIdpais = paisIdpais;
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    @XmlTransient
+    public List<Itinerario> getItinerarioList() {
+        return itinerarioList;
+    }
+
+    public void setItinerarioList(List<Itinerario> itinerarioList) {
+        this.itinerarioList = itinerarioList;
     }
 
     @Override

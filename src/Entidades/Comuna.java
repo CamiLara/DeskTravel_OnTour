@@ -13,6 +13,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,38 +27,41 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author camil
  */
 @Entity
-@Table(name = "TIPOACTIVIDAD")
+@Table(name = "COMUNA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tipoactividad.findAll", query = "SELECT t FROM Tipoactividad t")
-    , @NamedQuery(name = "Tipoactividad.findByIdtipoactividad", query = "SELECT t FROM Tipoactividad t WHERE t.idtipoactividad = :idtipoactividad")
-    , @NamedQuery(name = "Tipoactividad.findByNombre", query = "SELECT t FROM Tipoactividad t WHERE t.nombre = :nombre")})
-public class Tipoactividad implements Serializable {
+    @NamedQuery(name = "Comuna.findAll", query = "SELECT c FROM Comuna c")
+    , @NamedQuery(name = "Comuna.findByIdcomuna", query = "SELECT c FROM Comuna c WHERE c.idcomuna = :idcomuna")
+    , @NamedQuery(name = "Comuna.findByNombre", query = "SELECT c FROM Comuna c WHERE c.nombre = :nombre")})
+public class Comuna implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDTIPOACTIVIDAD")
-    private BigDecimal idtipoactividad;
+    @Column(name = "IDCOMUNA")
+    private BigDecimal idcomuna;
     @Column(name = "NOMBRE")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoactividad")
-    private List<Actividad> actividadList;
+    @JoinColumn(name = "REGION", referencedColumnName = "IDREGION")
+    @ManyToOne(optional = false)
+    private Region region;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comunaIdcomuna")
+    private List<Colegio> colegioList;
 
-    public Tipoactividad() {
+    public Comuna() {
     }
 
-    public Tipoactividad(BigDecimal idtipoactividad) {
-        this.idtipoactividad = idtipoactividad;
+    public Comuna(BigDecimal idcomuna) {
+        this.idcomuna = idcomuna;
     }
 
-    public BigDecimal getIdtipoactividad() {
-        return idtipoactividad;
+    public BigDecimal getIdcomuna() {
+        return idcomuna;
     }
 
-    public void setIdtipoactividad(BigDecimal idtipoactividad) {
-        this.idtipoactividad = idtipoactividad;
+    public void setIdcomuna(BigDecimal idcomuna) {
+        this.idcomuna = idcomuna;
     }
 
     public String getNombre() {
@@ -67,30 +72,38 @@ public class Tipoactividad implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
-    public List<Actividad> getActividadList() {
-        return actividadList;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setActividadList(List<Actividad> actividadList) {
-        this.actividadList = actividadList;
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    @XmlTransient
+    public List<Colegio> getColegioList() {
+        return colegioList;
+    }
+
+    public void setColegioList(List<Colegio> colegioList) {
+        this.colegioList = colegioList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idtipoactividad != null ? idtipoactividad.hashCode() : 0);
+        hash += (idcomuna != null ? idcomuna.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tipoactividad)) {
+        if (!(object instanceof Comuna)) {
             return false;
         }
-        Tipoactividad other = (Tipoactividad) object;
-        if ((this.idtipoactividad == null && other.idtipoactividad != null) || (this.idtipoactividad != null && !this.idtipoactividad.equals(other.idtipoactividad))) {
+        Comuna other = (Comuna) object;
+        if ((this.idcomuna == null && other.idcomuna != null) || (this.idcomuna != null && !this.idcomuna.equals(other.idcomuna))) {
             return false;
         }
         return true;
@@ -98,7 +111,7 @@ public class Tipoactividad implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Tipoactividad[ idtipoactividad=" + idtipoactividad + " ]";
+        return "Entidades.Comuna[ idcomuna=" + idcomuna + " ]";
     }
     
 }

@@ -25,41 +25,41 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author camil
  */
 @Entity
-@Table(name = "TIPOSEGURO")
+@Table(name = "TIPOSERVICIO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tiposeguro.findAll", query = "SELECT t FROM Tiposeguro t")
-    , @NamedQuery(name = "Tiposeguro.findByIdtiposeguro", query = "SELECT t FROM Tiposeguro t WHERE t.idtiposeguro = :idtiposeguro")
-    , @NamedQuery(name = "Tiposeguro.findByNombre", query = "SELECT t FROM Tiposeguro t WHERE t.nombre = :nombre")
-    , @NamedQuery(name = "Tiposeguro.findByDescripcion", query = "SELECT t FROM Tiposeguro t WHERE t.descripcion = :descripcion")})
-public class Tiposeguro implements Serializable {
+    @NamedQuery(name = "Tiposervicio.findAll", query = "SELECT t FROM Tiposervicio t")
+    , @NamedQuery(name = "Tiposervicio.findByIdtiposervicio", query = "SELECT t FROM Tiposervicio t WHERE t.idtiposervicio = :idtiposervicio")
+    , @NamedQuery(name = "Tiposervicio.findByNombre", query = "SELECT t FROM Tiposervicio t WHERE t.nombre = :nombre")
+    , @NamedQuery(name = "Tiposervicio.findByDescripcion", query = "SELECT t FROM Tiposervicio t WHERE t.descripcion = :descripcion")})
+public class Tiposervicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDTIPOSEGURO")
-    private BigDecimal idtiposeguro;
+    @Column(name = "IDTIPOSERVICIO")
+    private BigDecimal idtiposervicio;
     @Column(name = "NOMBRE")
     private String nombre;
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiposeguro")
-    private List<Polizaseguro> polizaseguroList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiposervicio")
+    private List<Servicio> servicioList;
 
-    public Tiposeguro() {
+    public Tiposervicio() {
     }
 
-    public Tiposeguro(BigDecimal idtiposeguro) {
-        this.idtiposeguro = idtiposeguro;
+    public Tiposervicio(BigDecimal idtiposervicio) {
+        this.idtiposervicio = idtiposervicio;
     }
 
-    public BigDecimal getIdtiposeguro() {
-        return idtiposeguro;
+    public BigDecimal getIdtiposervicio() {
+        return idtiposervicio;
     }
 
-    public void setIdtiposeguro(BigDecimal idtiposeguro) {
-        this.idtiposeguro = idtiposeguro;
+    public void setIdtiposervicio(BigDecimal idtiposervicio) {
+        this.idtiposervicio = idtiposervicio;
     }
 
     public String getNombre() {
@@ -79,29 +79,29 @@ public class Tiposeguro implements Serializable {
     }
 
     @XmlTransient
-    public List<Polizaseguro> getPolizaseguroList() {
-        return polizaseguroList;
+    public List<Servicio> getServicioList() {
+        return servicioList;
     }
 
-    public void setPolizaseguroList(List<Polizaseguro> polizaseguroList) {
-        this.polizaseguroList = polizaseguroList;
+    public void setServicioList(List<Servicio> servicioList) {
+        this.servicioList = servicioList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idtiposeguro != null ? idtiposeguro.hashCode() : 0);
+        hash += (idtiposervicio != null ? idtiposervicio.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tiposeguro)) {
+        if (!(object instanceof Tiposervicio)) {
             return false;
         }
-        Tiposeguro other = (Tiposeguro) object;
-        if ((this.idtiposeguro == null && other.idtiposeguro != null) || (this.idtiposeguro != null && !this.idtiposeguro.equals(other.idtiposeguro))) {
+        Tiposervicio other = (Tiposervicio) object;
+        if ((this.idtiposervicio == null && other.idtiposervicio != null) || (this.idtiposervicio != null && !this.idtiposervicio.equals(other.idtiposervicio))) {
             return false;
         }
         return true;
@@ -109,7 +109,7 @@ public class Tiposeguro implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Tiposeguro[ idtiposeguro=" + idtiposeguro + " ]";
+        return "Entidades.Tiposervicio[ idtiposervicio=" + idtiposervicio + " ]";
     }
     
 }

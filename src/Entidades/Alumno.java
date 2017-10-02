@@ -8,16 +8,17 @@ package Entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,8 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Alumno.findByIdalumno", query = "SELECT a FROM Alumno a WHERE a.idalumno = :idalumno")
     , @NamedQuery(name = "Alumno.findByNombre", query = "SELECT a FROM Alumno a WHERE a.nombre = :nombre")
     , @NamedQuery(name = "Alumno.findByDirecci\u00f3n", query = "SELECT a FROM Alumno a WHERE a.direcci\u00f3n = :direcci\u00f3n")
-    , @NamedQuery(name = "Alumno.findByCuentaalumnoIdcuentaalumnos", query = "SELECT a FROM Alumno a WHERE a.cuentaalumnoIdcuentaalumnos = :cuentaalumnoIdcuentaalumnos")
-    , @NamedQuery(name = "Alumno.findByTelefono", query = "SELECT a FROM Alumno a WHERE a.telefono = :telefono")})
+    , @NamedQuery(name = "Alumno.findByTelefono", query = "SELECT a FROM Alumno a WHERE a.telefono = :telefono")
+    , @NamedQuery(name = "Alumno.findByCorreoelectronico", query = "SELECT a FROM Alumno a WHERE a.correoelectronico = :correoelectronico")})
 public class Alumno implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,20 +50,23 @@ public class Alumno implements Serializable {
     private String nombre;
     @Column(name = "DIRECCI\u00d3N")
     private String dirección;
-    @Basic(optional = false)
-    @Column(name = "CUENTAALUMNO_IDCUENTAALUMNOS")
-    private BigInteger cuentaalumnoIdcuentaalumnos;
     @Column(name = "TELEFONO")
     private BigInteger telefono;
-    @JoinTable(name = "RELATION_39", joinColumns = {
-        @JoinColumn(name = "ALUMNO_IDALUMNO", referencedColumnName = "IDALUMNO")}, inverseJoinColumns = {
-        @JoinColumn(name = "CURSO_IDCURSO", referencedColumnName = "IDCURSO")
-        , @JoinColumn(name = "CURSO_ACTIVIDAD_IDACTIVIDAD", referencedColumnName = "ACTIVIDAD_IDACTIVIDAD")})
-    @ManyToMany
-    private Collection<Curso> cursoCollection;
-    @JoinColumn(name = "APODERADO_IDAPODERADO", referencedColumnName = "IDAPODERADO")
+    @Basic(optional = false)
+    @Column(name = "CORREOELECTRONICO")
+    private String correoelectronico;
+    @JoinColumn(name = "APODERADO", referencedColumnName = "IDAPODERADO")
     @OneToOne(optional = false)
-    private Apoderado apoderadoIdapoderado;
+    private Apoderado apoderado;
+    @JoinColumn(name = "CURSO", referencedColumnName = "IDCURSO")
+    @ManyToOne(optional = false)
+    private Curso curso;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno")
+    private List<Contrato> contratoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "alumno")
+    private Cuentaalumno cuentaalumno;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno")
+    private List<Polizaseguro> polizaseguroList;
 
     public Alumno() {
     }
@@ -71,9 +75,9 @@ public class Alumno implements Serializable {
         this.idalumno = idalumno;
     }
 
-    public Alumno(BigDecimal idalumno, BigInteger cuentaalumnoIdcuentaalumnos) {
+    public Alumno(BigDecimal idalumno, String correoelectronico) {
         this.idalumno = idalumno;
-        this.cuentaalumnoIdcuentaalumnos = cuentaalumnoIdcuentaalumnos;
+        this.correoelectronico = correoelectronico;
     }
 
     public BigDecimal getIdalumno() {
@@ -100,14 +104,6 @@ public class Alumno implements Serializable {
         this.dirección = dirección;
     }
 
-    public BigInteger getCuentaalumnoIdcuentaalumnos() {
-        return cuentaalumnoIdcuentaalumnos;
-    }
-
-    public void setCuentaalumnoIdcuentaalumnos(BigInteger cuentaalumnoIdcuentaalumnos) {
-        this.cuentaalumnoIdcuentaalumnos = cuentaalumnoIdcuentaalumnos;
-    }
-
     public BigInteger getTelefono() {
         return telefono;
     }
@@ -116,21 +112,54 @@ public class Alumno implements Serializable {
         this.telefono = telefono;
     }
 
+    public String getCorreoelectronico() {
+        return correoelectronico;
+    }
+
+    public void setCorreoelectronico(String correoelectronico) {
+        this.correoelectronico = correoelectronico;
+    }
+
+    public Apoderado getApoderado() {
+        return apoderado;
+    }
+
+    public void setApoderado(Apoderado apoderado) {
+        this.apoderado = apoderado;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
     @XmlTransient
-    public Collection<Curso> getCursoCollection() {
-        return cursoCollection;
+    public List<Contrato> getContratoList() {
+        return contratoList;
     }
 
-    public void setCursoCollection(Collection<Curso> cursoCollection) {
-        this.cursoCollection = cursoCollection;
+    public void setContratoList(List<Contrato> contratoList) {
+        this.contratoList = contratoList;
     }
 
-    public Apoderado getApoderadoIdapoderado() {
-        return apoderadoIdapoderado;
+    public Cuentaalumno getCuentaalumno() {
+        return cuentaalumno;
     }
 
-    public void setApoderadoIdapoderado(Apoderado apoderadoIdapoderado) {
-        this.apoderadoIdapoderado = apoderadoIdapoderado;
+    public void setCuentaalumno(Cuentaalumno cuentaalumno) {
+        this.cuentaalumno = cuentaalumno;
+    }
+
+    @XmlTransient
+    public List<Polizaseguro> getPolizaseguroList() {
+        return polizaseguroList;
+    }
+
+    public void setPolizaseguroList(List<Polizaseguro> polizaseguroList) {
+        this.polizaseguroList = polizaseguroList;
     }
 
     @Override

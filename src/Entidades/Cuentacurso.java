@@ -7,16 +7,18 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.math.BigInteger;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -30,7 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cuentacurso.findAll", query = "SELECT c FROM Cuentacurso c")
-    , @NamedQuery(name = "Cuentacurso.findByIdcuentacurso", query = "SELECT c FROM Cuentacurso c WHERE c.idcuentacurso = :idcuentacurso")})
+    , @NamedQuery(name = "Cuentacurso.findByIdcuentacurso", query = "SELECT c FROM Cuentacurso c WHERE c.idcuentacurso = :idcuentacurso")
+    , @NamedQuery(name = "Cuentacurso.findBySaldo", query = "SELECT c FROM Cuentacurso c WHERE c.saldo = :saldo")})
 public class Cuentacurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,10 +42,13 @@ public class Cuentacurso implements Serializable {
     @Basic(optional = false)
     @Column(name = "IDCUENTACURSO")
     private BigDecimal idcuentacurso;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuentacursoIdcuentacurso")
+    @Column(name = "SALDO")
+    private BigInteger saldo;
+    @JoinColumn(name = "CURSO", referencedColumnName = "IDCURSO")
+    @ManyToOne(optional = false)
     private Curso curso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentacursoIdcuentacurso")
-    private Collection<Pago> pagoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentacurso")
+    private List<Pago> pagoList;
 
     public Cuentacurso() {
     }
@@ -59,6 +65,14 @@ public class Cuentacurso implements Serializable {
         this.idcuentacurso = idcuentacurso;
     }
 
+    public BigInteger getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(BigInteger saldo) {
+        this.saldo = saldo;
+    }
+
     public Curso getCurso() {
         return curso;
     }
@@ -68,12 +82,12 @@ public class Cuentacurso implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Pago> getPagoCollection() {
-        return pagoCollection;
+    public List<Pago> getPagoList() {
+        return pagoList;
     }
 
-    public void setPagoCollection(Collection<Pago> pagoCollection) {
-        this.pagoCollection = pagoCollection;
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
 
     @Override

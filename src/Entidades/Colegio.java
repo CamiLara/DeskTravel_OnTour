@@ -7,17 +7,21 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,7 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c")
     , @NamedQuery(name = "Colegio.findByIdcolegio", query = "SELECT c FROM Colegio c WHERE c.idcolegio = :idcolegio")
-    , @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre")})
+    , @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")
+    , @NamedQuery(name = "Colegio.findByTelefono", query = "SELECT c FROM Colegio c WHERE c.telefono = :telefono")})
 public class Colegio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,11 +46,15 @@ public class Colegio implements Serializable {
     private BigDecimal idcolegio;
     @Column(name = "NOMBRE")
     private String nombre;
-    @JoinColumns({
-        @JoinColumn(name = "CURSO_IDCURSO", referencedColumnName = "IDCURSO")
-        , @JoinColumn(name = "CURSO_ACTIVIDAD_IDACTIVIDAD", referencedColumnName = "ACTIVIDAD_IDACTIVIDAD")})
-    @ManyToOne
-    private Curso curso;
+    @Column(name = "DIRECCION")
+    private String direccion;
+    @Column(name = "TELEFONO")
+    private BigInteger telefono;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colegio")
+    private List<Curso> cursoList;
+    @JoinColumn(name = "COMUNA_IDCOMUNA", referencedColumnName = "IDCOMUNA")
+    @ManyToOne(optional = false)
+    private Comuna comunaIdcomuna;
 
     public Colegio() {
     }
@@ -69,12 +79,37 @@ public class Colegio implements Serializable {
         this.nombre = nombre;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public BigInteger getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(BigInteger telefono) {
+        this.telefono = telefono;
+    }
+
+    @XmlTransient
+    public List<Curso> getCursoList() {
+        return cursoList;
+    }
+
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
+    }
+
+    public Comuna getComunaIdcomuna() {
+        return comunaIdcomuna;
+    }
+
+    public void setComunaIdcomuna(Comuna comunaIdcomuna) {
+        this.comunaIdcomuna = comunaIdcomuna;
     }
 
     @Override

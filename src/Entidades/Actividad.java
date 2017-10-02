@@ -7,7 +7,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,11 +40,14 @@ public class Actividad implements Serializable {
     @Basic(optional = false)
     @Column(name = "IDACTIVIDAD")
     private BigDecimal idactividad;
-    @JoinColumn(name = "TIPOACTIVIDAD_IDTIPOACTIVIDAD", referencedColumnName = "IDTIPOACTIVIDAD")
+    @JoinColumn(name = "CURSO_IDCURSO", referencedColumnName = "IDCURSO")
     @ManyToOne(optional = false)
-    private Tipoactividad tipoactividadIdtipoactividad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad")
-    private Collection<Curso> cursoCollection;
+    private Curso cursoIdcurso;
+    @JoinColumn(name = "TIPOACTIVIDAD", referencedColumnName = "IDTIPOACTIVIDAD")
+    @ManyToOne(optional = false)
+    private Tipoactividad tipoactividad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad1")
+    private List<Actividadaportes> actividadaportesList;
 
     public Actividad() {
     }
@@ -61,21 +64,29 @@ public class Actividad implements Serializable {
         this.idactividad = idactividad;
     }
 
-    public Tipoactividad getTipoactividadIdtipoactividad() {
-        return tipoactividadIdtipoactividad;
+    public Curso getCursoIdcurso() {
+        return cursoIdcurso;
     }
 
-    public void setTipoactividadIdtipoactividad(Tipoactividad tipoactividadIdtipoactividad) {
-        this.tipoactividadIdtipoactividad = tipoactividadIdtipoactividad;
+    public void setCursoIdcurso(Curso cursoIdcurso) {
+        this.cursoIdcurso = cursoIdcurso;
+    }
+
+    public Tipoactividad getTipoactividad() {
+        return tipoactividad;
+    }
+
+    public void setTipoactividad(Tipoactividad tipoactividad) {
+        this.tipoactividad = tipoactividad;
     }
 
     @XmlTransient
-    public Collection<Curso> getCursoCollection() {
-        return cursoCollection;
+    public List<Actividadaportes> getActividadaportesList() {
+        return actividadaportesList;
     }
 
-    public void setCursoCollection(Collection<Curso> cursoCollection) {
-        this.cursoCollection = cursoCollection;
+    public void setActividadaportesList(List<Actividadaportes> actividadaportesList) {
+        this.actividadaportesList = actividadaportesList;
     }
 
     @Override

@@ -7,18 +7,16 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,7 +28,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Anexos.findAll", query = "SELECT a FROM Anexos a")
     , @NamedQuery(name = "Anexos.findByIdanexo", query = "SELECT a FROM Anexos a WHERE a.idanexo = :idanexo")
-    , @NamedQuery(name = "Anexos.findByFile", query = "SELECT a FROM Anexos a WHERE a.file = :file")})
+    , @NamedQuery(name = "Anexos.findByFile", query = "SELECT a FROM Anexos a WHERE a.file = :file")
+    , @NamedQuery(name = "Anexos.findByToken", query = "SELECT a FROM Anexos a WHERE a.token = :token")})
 public class Anexos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,10 +39,13 @@ public class Anexos implements Serializable {
     @Column(name = "IDANEXO")
     private BigDecimal idanexo;
     @Basic(optional = false)
-    @Column(name = "FILE")
+    @Column(name = "File")
     private String file;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anexosIdanexo")
-    private Collection<Contratov2> contratov2Collection;
+    @Column(name = "TOKEN")
+    private String token;
+    @JoinColumn(name = "CONTRATO", referencedColumnName = "IDCONTRATO")
+    @ManyToOne(optional = false)
+    private Contrato contrato;
 
     public Anexos() {
     }
@@ -73,13 +75,20 @@ public class Anexos implements Serializable {
         this.file = file;
     }
 
-    @XmlTransient
-    public Collection<Contratov2> getContratov2Collection() {
-        return contratov2Collection;
+    public String getToken() {
+        return token;
     }
 
-    public void setContratov2Collection(Collection<Contratov2> contratov2Collection) {
-        this.contratov2Collection = contratov2Collection;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
     }
 
     @Override

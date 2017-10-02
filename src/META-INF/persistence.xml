@@ -2,43 +2,43 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="DeskTravel_OnTourPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>Entidades.AgenciaOnTour</class>
-    <class>Entidades.Menu</class>
-    <class>Entidades.Alumno</class>
-    <class>Entidades.Region</class>
-    <class>Entidades.Anexos</class>
-    <class>Entidades.Tipocolaborador</class>
-    <class>Entidades.Polizaseguros</class>
-    <class>Entidades.Curso</class>
-    <class>Entidades.Tipoactividad</class>
-    <class>Entidades.Tipocontrato</class>
-    <class>Entidades.Pago</class>
-    <class>Entidades.Cuentacurso</class>
-    <class>Entidades.Polizaseguro</class>
+    <class>Entidades.Servicio</class>
+    <class>Entidades.Comuna</class>
     <class>Entidades.Actividadviaje</class>
-    <class>Entidades.Tiposervicios</class>
-    <class>Entidades.Tipopago</class>
-    <class>Entidades.Tiposeguro</class>
-    <class>Entidades.Tipousuario</class>
-    <class>Entidades.Pais</class>
-    <class>Entidades.Colaborador</class>
-    <class>Entidades.Estadocuenta</class>
-    <class>Entidades.Destinoactividadviaje</class>
-    <class>Entidades.Tipocuenta</class>
-    <class>Entidades.Perfil</class>
-    <class>Entidades.Colegio</class>
-    <class>Entidades.Aseguradora</class>
-    <class>Entidades.Servicios</class>
-    <class>Entidades.Contratov2</class>
+    <class>Entidades.Cuenta</class>
+    <class>Entidades.Destino</class>
+    <class>Entidades.Tipoactividadviaje</class>
+    <class>Entidades.Cuentaalumno</class>
+    <class>Entidades.Tipoactividad</class>
+    <class>Entidades.Anexos</class>
     <class>Entidades.Apoderado</class>
+    <class>Entidades.Polizaseguro</class>
     <class>Entidades.Actividad</class>
+    <class>Entidades.Tipocontrato</class>
+    <class>Entidades.Contrato</class>
+    <class>Entidades.Pais</class>
+    <class>Entidades.Tipopago</class>
+    <class>Entidades.Tipocuenta</class>
+    <class>Entidades.Pago</class>
+    <class>Entidades.Colegio</class>
+    <class>Entidades.Cuentacurso</class>
+    <class>Entidades.Tiposeguro</class>
+    <class>Entidades.Curso</class>
+    <class>Entidades.Estadocuenta</class>
     <class>Entidades.Origen</class>
+    <class>Entidades.Permiso</class>
+    <class>Entidades.Itinerario</class>
+    <class>Entidades.Aseguradora</class>
+    <class>Entidades.Actividadaportes</class>
+    <class>Entidades.Tiposervicio</class>
+    <class>Entidades.Region</class>
+    <class>Entidades.Perfil</class>
+    <class>Entidades.Alumno</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-      <property name="javax.persistence.jdbc.user" value="system"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@18.221.245.107:1521:ontourdev"/>
+      <property name="javax.persistence.jdbc.user" value="c##pablo"/>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-      <property name="javax.persistence.jdbc.password" value="portafolio2017"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.jdbc.password" value="pablo1234"/>
     </properties>
   </persistence-unit>
 </persistence>

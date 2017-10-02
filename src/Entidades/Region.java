@@ -7,13 +7,14 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,8 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Region.findAll", query = "SELECT r FROM Region r")
     , @NamedQuery(name = "Region.findByIdregion", query = "SELECT r FROM Region r WHERE r.idregion = :idregion")
-    , @NamedQuery(name = "Region.findByNombre", query = "SELECT r FROM Region r WHERE r.nombre = :nombre")
-    , @NamedQuery(name = "Region.findByComunaIdcomuna", query = "SELECT r FROM Region r WHERE r.comunaIdcomuna = :comunaIdcomuna")})
+    , @NamedQuery(name = "Region.findByNombre", query = "SELECT r FROM Region r WHERE r.nombre = :nombre")})
 public class Region implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,11 +44,11 @@ public class Region implements Serializable {
     @Basic(optional = false)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Basic(optional = false)
-    @Column(name = "COMUNA_IDCOMUNA")
-    private BigInteger comunaIdcomuna;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionIdregion")
-    private Collection<Pais> paisCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "region")
+    private List<Comuna> comunaList;
+    @JoinColumn(name = "PAIS", referencedColumnName = "IDPAIS")
+    @ManyToOne(optional = false)
+    private Pais pais;
 
     public Region() {
     }
@@ -57,10 +57,9 @@ public class Region implements Serializable {
         this.idregion = idregion;
     }
 
-    public Region(BigDecimal idregion, String nombre, BigInteger comunaIdcomuna) {
+    public Region(BigDecimal idregion, String nombre) {
         this.idregion = idregion;
         this.nombre = nombre;
-        this.comunaIdcomuna = comunaIdcomuna;
     }
 
     public BigDecimal getIdregion() {
@@ -79,21 +78,21 @@ public class Region implements Serializable {
         this.nombre = nombre;
     }
 
-    public BigInteger getComunaIdcomuna() {
-        return comunaIdcomuna;
-    }
-
-    public void setComunaIdcomuna(BigInteger comunaIdcomuna) {
-        this.comunaIdcomuna = comunaIdcomuna;
-    }
-
     @XmlTransient
-    public Collection<Pais> getPaisCollection() {
-        return paisCollection;
+    public List<Comuna> getComunaList() {
+        return comunaList;
     }
 
-    public void setPaisCollection(Collection<Pais> paisCollection) {
-        this.paisCollection = paisCollection;
+    public void setComunaList(List<Comuna> comunaList) {
+        this.comunaList = comunaList;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
     @Override

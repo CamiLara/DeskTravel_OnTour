@@ -7,14 +7,12 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,11 +41,12 @@ public class Pais implements Serializable {
     private BigDecimal idpais;
     @Column(name = "NOMBRE")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paisIdpais")
-    private Collection<Origen> origenCollection;
-    @JoinColumn(name = "REGION_IDREGION", referencedColumnName = "IDREGION")
-    @ManyToOne(optional = false)
-    private Region regionIdregion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pais")
+    private List<Origen> origenList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pais")
+    private List<Region> regionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pais")
+    private List<Destino> destinoList;
 
     public Pais() {
     }
@@ -73,20 +72,30 @@ public class Pais implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Origen> getOrigenCollection() {
-        return origenCollection;
+    public List<Origen> getOrigenList() {
+        return origenList;
     }
 
-    public void setOrigenCollection(Collection<Origen> origenCollection) {
-        this.origenCollection = origenCollection;
+    public void setOrigenList(List<Origen> origenList) {
+        this.origenList = origenList;
     }
 
-    public Region getRegionIdregion() {
-        return regionIdregion;
+    @XmlTransient
+    public List<Region> getRegionList() {
+        return regionList;
     }
 
-    public void setRegionIdregion(Region regionIdregion) {
-        this.regionIdregion = regionIdregion;
+    public void setRegionList(List<Region> regionList) {
+        this.regionList = regionList;
+    }
+
+    @XmlTransient
+    public List<Destino> getDestinoList() {
+        return destinoList;
+    }
+
+    public void setDestinoList(List<Destino> destinoList) {
+        this.destinoList = destinoList;
     }
 
     @Override

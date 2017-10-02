@@ -13,7 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -31,8 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Apoderado.findAll", query = "SELECT a FROM Apoderado a")
     , @NamedQuery(name = "Apoderado.findByIdapoderado", query = "SELECT a FROM Apoderado a WHERE a.idapoderado = :idapoderado")
     , @NamedQuery(name = "Apoderado.findByNombre", query = "SELECT a FROM Apoderado a WHERE a.nombre = :nombre")
+    , @NamedQuery(name = "Apoderado.findByRut", query = "SELECT a FROM Apoderado a WHERE a.rut = :rut")
     , @NamedQuery(name = "Apoderado.findByDireccion", query = "SELECT a FROM Apoderado a WHERE a.direccion = :direccion")
-    , @NamedQuery(name = "Apoderado.findByTelefono", query = "SELECT a FROM Apoderado a WHERE a.telefono = :telefono")})
+    , @NamedQuery(name = "Apoderado.findByTelefono", query = "SELECT a FROM Apoderado a WHERE a.telefono = :telefono")
+    , @NamedQuery(name = "Apoderado.findByCelular", query = "SELECT a FROM Apoderado a WHERE a.celular = :celular")})
 public class Apoderado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,17 +45,15 @@ public class Apoderado implements Serializable {
     @Basic(optional = false)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Lob
     @Column(name = "RUT")
-    private Object rut;
+    private String rut;
     @Column(name = "DIRECCION")
     private String direccion;
     @Column(name = "TELEFONO")
     private BigInteger telefono;
-    @Lob
     @Column(name = "CELULAR")
-    private Object celular;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apoderadoIdapoderado")
+    private String celular;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apoderado")
     private Alumno alumno;
 
     public Apoderado() {
@@ -85,11 +84,11 @@ public class Apoderado implements Serializable {
         this.nombre = nombre;
     }
 
-    public Object getRut() {
+    public String getRut() {
         return rut;
     }
 
-    public void setRut(Object rut) {
+    public void setRut(String rut) {
         this.rut = rut;
     }
 
@@ -109,11 +108,11 @@ public class Apoderado implements Serializable {
         this.telefono = telefono;
     }
 
-    public Object getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(Object celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 
