@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Estadocuenta" optimistic-lock="version" schema="C##PABLO" table="ESTADOCUENTA">
+    <id name="idestadocuenta" type="big_decimal">
+      <column name="IDESTADOCUENTA" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="cuentaalumno" type="big_decimal">
+      <column name="CUENTAALUMNO" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="detalle" type="string">
+      <column length="200" name="DETALLE"/>
+    </property>
+  </class>
+</hibernate-mapping>

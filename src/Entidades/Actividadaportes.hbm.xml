@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Actividadaportes" optimistic-lock="version" schema="C##PABLO" table="ACTIVIDADAPORTES">
+    <composite-id class="Entidades.ActividadaportesId" name="id">
+      <key-property name="aporte" type="big_decimal">
+        <column name="APORTE" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="actividad" type="big_decimal">
+        <column name="ACTIVIDAD" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="cuentaalumnos" type="big_decimal">
+        <column name="CUENTAALUMNOS" precision="22" scale="0"/>
+      </key-property>
+    </composite-id>
+    <property name="monto" type="big_decimal">
+      <column name="MONTO" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

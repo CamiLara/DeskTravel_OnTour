@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Itinerario" optimistic-lock="version" schema="C##PABLO" table="ITINERARIO">
+    <composite-id class="Entidades.ItinerarioId" name="id">
+      <key-property name="destino" type="big_decimal">
+        <column name="DESTINO" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="actividadviaje" type="big_decimal">
+        <column name="ACTIVIDADVIAJE" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="origen" type="big_decimal">
+        <column name="ORIGEN" precision="22" scale="0"/>
+      </key-property>
+    </composite-id>
+    <property name="fechainicio" type="date">
+      <column length="7" name="FECHAINICIO"/>
+    </property>
+    <property name="fechatermino" type="date">
+      <column length="7" name="FECHATERMINO"/>
+    </property>
+    <property name="contrato" type="big_decimal">
+      <column name="CONTRATO" not-null="true" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

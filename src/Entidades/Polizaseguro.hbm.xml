@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Polizaseguro" optimistic-lock="version" schema="C##PABLO" table="POLIZASEGURO">
+    <id name="idpolizaseguro" type="big_decimal">
+      <column name="IDPOLIZASEGURO" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="descripción" type="big_decimal">
+      <column name="DESCRIPCIÓN" precision="22" scale="0"/>
+    </property>
+    <property name="tiposeguro" type="big_decimal">
+      <column name="TIPOSEGURO" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="aseguradora" type="big_decimal">
+      <column name="ASEGURADORA" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="alumno" type="big_decimal">
+      <column name="ALUMNO" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="vigenciainicio" type="date">
+      <column length="7" name="VIGENCIAINICIO"/>
+    </property>
+    <property name="vigenciatermino" type="date">
+      <column length="7" name="VIGENCIATERMINO"/>
+    </property>
+    <property name="fechacontratacion" type="date">
+      <column length="7" name="FECHACONTRATACION"/>
+    </property>
+    <property name="montoasegurado" type="big_decimal">
+      <column name="MONTOASEGURADO" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

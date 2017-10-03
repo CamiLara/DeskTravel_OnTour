@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.PermisoJn" optimistic-lock="version" schema="C##PABLO" table="PERMISO_JN">
+    <composite-id class="Entidades.PermisoJnId" name="id">
+      <key-property name="jnOperation" type="string">
+        <column length="3" name="JN_OPERATION"/>
+      </key-property>
+      <key-property name="jnOracleUser" type="string">
+        <column length="30" name="JN_ORACLE_USER"/>
+      </key-property>
+      <key-property name="jnDatetime" type="date">
+        <column length="7" name="JN_DATETIME"/>
+      </key-property>
+      <key-property name="jnNotes" type="string">
+        <column length="240" name="JN_NOTES"/>
+      </key-property>
+      <key-property name="jnAppln" type="string">
+        <column length="35" name="JN_APPLN"/>
+      </key-property>
+      <key-property name="jnSession" type="big_decimal">
+        <column name="JN_SESSION" precision="38" scale="0"/>
+      </key-property>
+      <key-property name="idpermiso" type="big_decimal">
+        <column name="IDPERMISO" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="nombre" type="string">
+        <column length="100" name="NOMBRE"/>
+      </key-property>
+      <key-property name="descripcion" type="string">
+        <column length="200" name="DESCRIPCION"/>
+      </key-property>
+      <key-property name="perfil" type="big_decimal">
+        <column name="PERFIL" precision="22" scale="0"/>
+      </key-property>
+    </composite-id>
+  </class>
+</hibernate-mapping>

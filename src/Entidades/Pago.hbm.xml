@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Pago" optimistic-lock="version" schema="C##PABLO" table="PAGO">
+    <id name="idpago" type="big_decimal">
+      <column name="IDPAGO" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="cuentacurso" type="big_decimal">
+      <column name="CUENTACURSO" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="fechapago" type="date">
+      <column length="7" name="FECHAPAGO"/>
+    </property>
+    <property name="detalle" type="string">
+      <column length="200" name="DETALLE"/>
+    </property>
+    <property name="montocancelado" type="string">
+      <column length="200" name="MONTOCANCELADO"/>
+    </property>
+    <property name="tipopago" type="big_decimal">
+      <column name="TIPOPAGO" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="cuentaalumno" type="big_decimal">
+      <column name="CUENTAALUMNO" not-null="true" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

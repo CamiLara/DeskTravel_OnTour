@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Cuentacurso" optimistic-lock="version" schema="C##PABLO" table="CUENTACURSO">
+    <id name="idcuentacurso" type="big_decimal">
+      <column name="IDCUENTACURSO" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="curso" type="big_decimal">
+      <column name="CURSO" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="saldo" type="big_decimal">
+      <column name="SALDO" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

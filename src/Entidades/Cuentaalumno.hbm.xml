@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-10-2017 21:55:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="Entidades.Cuentaalumno" optimistic-lock="version" schema="C##PABLO" table="CUENTAALUMNO">
+    <id name="idcuentaalumnos" type="big_decimal">
+      <column name="IDCUENTAALUMNOS" precision="22" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="cupototal" type="big_decimal">
+      <column name="CUPOTOTAL" precision="22" scale="0"/>
+    </property>
+    <property name="cupoutilizado" type="big_decimal">
+      <column name="CUPOUTILIZADO" precision="22" scale="0"/>
+    </property>
+    <property name="tipocuenta" type="big_decimal">
+      <column name="TIPOCUENTA" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="alumno" type="big_decimal">
+      <column name="ALUMNO" not-null="true" precision="22" scale="0" unique="true"/>
+    </property>
+    <property name="aporte" type="big_decimal">
+      <column name="APORTE" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="saldo" type="big_decimal">
+      <column name="SALDO" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>
